@@ -1,20 +1,31 @@
 
 Sub master()
     
-    Call sort
+    Dim ws As Worksheet
     
-    Call format
+    Application.ScreenUpdating = False 'https://docs.microsoft.com/en-us/office/vba/api/excel.application.screenupdating
+    
+    For Each ws In Worksheets
+    
+        ws.Activate 'https://www.youtube.com/watch?v=3OfVIsKy59c
+    
+        Call sort
+    
+        Call format
 
-    Call list_stocks
+        Call list_stocks
 
-    Call stock_value
+        Call stock_value
     
-    Call pct_change
+        Call pct_change
     
-    Call format_cells
+        Call format_cells
     
-    Call superlatives
+        Call superlatives
     
+    Next ws
+    
+    Application.ScreenUpdating = True
 
 End Sub
 
@@ -42,27 +53,27 @@ End Sub
 
 Sub format()
 
-    Cells(1, 10).Value = "Ticker Symbol"
+    ActiveSheet.Cells(1, 10).Value = "Ticker Symbol"
     
-    Cells(1, 11).Value = "Annual Change"
+    ActiveSheet.Cells(1, 11).Value = "Annual Change"
     
-    Cells(1, 12).Value = "Percent Change"
+    ActiveSheet.Cells(1, 12).Value = "Percent Change"
     
-    Cells(1, 13).Value = "Total Stock Volume"
+    ActiveSheet.Cells(1, 13).Value = "Total Stock Volume"
     
-    Cells(1, 15).Value = "Ticker"
+    ActiveSheet.Cells(1, 15).Value = "Ticker"
     
-    Cells(1, 16).Value = "Value"
+    ActiveSheet.Cells(1, 16).Value = "Value"
     
-    Cells(2, 14).Value = "Greatest % Increase"
+    ActiveSheet.Cells(2, 14).Value = "Greatest % Increase"
     
-    Cells(3, 14).Value = "Greatest % Decrease"
+    ActiveSheet.Cells(3, 14).Value = "Greatest % Decrease"
     
-    Cells(4, 14).Value = "Largest Volume"
+    ActiveSheet.Cells(4, 14).Value = "Largest Volume"
     
-    Range("J1:R1").Font.Bold = True 'https://docs.microsoft.com/en-us/office/vba/api/excel.font.bold
+    ActiveSheet.Range("J1:R1").Font.Bold = True 'https://docs.microsoft.com/en-us/office/vba/api/excel.font.bold
     
-    Columns("J:R").AutoFit ' from the Wells Fargo part 2 activity
+    ActiveSheet.Columns("J:R").AutoFit ' from the Wells Fargo part 2 activity
     
     Range("N1:N4").Font.Bold = True
     
