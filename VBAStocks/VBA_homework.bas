@@ -7,7 +7,7 @@ Sub master()
     
     For Each ws In Worksheets
     
-        ws.Activate 'https://www.youtube.com/watch?v=3OfVIsKy59c
+        ws.Activate
     
         Call sort
     
@@ -218,15 +218,20 @@ Sub pct_change()
                 net_change = 0
                 pct_change = 0
             
-            ElseIf dayx_close > 0 Then
+                ElseIf day1_open = 0 Then
+                
+                    net_change = 0
+                    pct_change = 0
+                    
+                Else
+                    
+                    net_change = dayx_close - day1_open
             
-                net_change = dayx_close - day1_open
+                    pct_change = dayx_close / day1_open
             
-                pct_change = dayx_close / day1_open
-            
-                pct_change = pct_change - 1
-            
-            End If
+                    pct_change = pct_change - 1
+                    
+                End If
         
             Cells(j, 11).Value = net_change
             
