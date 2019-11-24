@@ -1,9 +1,14 @@
 
 Sub master()
+
+    'The master subroutine governs the entire program and includes the coding to make the code run on each worksheet in sucession. 
+    'Most of the other functionality comes from called subroutines. 
     
     Dim ws As Worksheet
     
-    Application.ScreenUpdating = False 'https://docs.microsoft.com/en-us/office/vba/api/excel.application.screenupdating
+    Application.ScreenUpdating = False 
+    
+    'I learned about screen updating from https://docs.microsoft.com/en-us/office/vba/api/excel.application.screenupdating
     
     For Each ws In Worksheets
     
@@ -30,26 +35,29 @@ Sub master()
 End Sub
 
 'This subroutine will ensure that the ticker symbols are all sorted correctly so that the rest of the program will work even if the initial data is unsorted.
+'It is not part of the assignment but it is intended to make sure that the code still runs even if the stocks end up out of order somehow. 
 
 Sub sort()
-
     
     Dim lastrow As Long
     lastrow = Cells(Rows.Count, 1).End(xlUp).Row
+
     With ActiveWorkbook.ActiveSheet.sort
+
         .SortFields.Clear
         .SortFields.Add Key:=Range("A2:A" & lastrow), Order:=xlAscending
         .SortFields.Add Key:=Range("B2:B" & lastrow), Order:=xlAscending
         .SetRange Range("A2:G" & lastrow)
         .Header = xlNo
         .Apply
-    End With
-    'https://stackoverflow.com/questions/37998154/vba-excel-variable-sorting-on-multiple-keys-orders
-    
 
+    End With
+    
+'The above code comes from https://stackoverflow.com/questions/37998154/vba-excel-variable-sorting-on-multiple-keys-orders
+    
 End Sub
 
-'This subroutine sets up the table headers for the requested results.
+'The subroutine below sets up the table headers for the requested results.
 
 Sub format()
 
@@ -76,12 +84,10 @@ Sub format()
     ActiveSheet.Columns("J:R").AutoFit ' from the Wells Fargo part 2 activity
     
     Range("N1:N4").Font.Bold = True
-    
-    
 
 End Sub
 
-' This is the subroutine to populate the list of different ticker symbols.
+' The subroutine below populates the list of different ticker symbols.
 
 Sub list_stocks()
 
@@ -108,11 +114,10 @@ Sub list_stocks()
 
 End Sub
 
+'The subroutine below supplies the total volume of each stock (sum of volumes). 
+
 Sub stock_value()
 
-'This subroutine should supply the volume of the stock (sum of total volume)
-
-    
     Dim lastrow As Long
 
     lastrow = Cells(Rows.Count, "A").End(xlUp).Row
@@ -137,13 +142,6 @@ Sub stock_value()
             
             v = v + volume
         
-            'If Cells(i, 7).Value <> 0 Then
-            
-            '   v = v + volume
-                 
-            'Else
-             '   v = v + 0
-        
        ElseIf Cells(i + 1, 1) <> Cells(i, 1) Then
        
             volume = Cells(i, 7).Value
@@ -161,31 +159,13 @@ Sub stock_value()
         End If
  
             
-    Next i
-    
-    'This is me trying to put the separators (commas) into the numbers, unsuccessfully
-    'It is the least of my problems right now.
-    
-    
-    
-    'Dim column_end As Long
-    
-    'columnend = Cells(Rows.Count, "M").End(xlUp).Row
-    
-    'For k = 2 To columnend
-    
-     '   Print format(Cells(k, 13), "#,###,###,###")
-        
-    'Next k
-        
-        
-        
+    Next i       
             
 End Sub
 
-Sub pct_change()
+'The subroutine below handles the percent change component for each stock. 
 
-'this one is for the percent change component of the exercise
+Sub pct_change()
 
     Dim lastrow As Long
 
@@ -248,13 +228,9 @@ Sub pct_change()
     
     Next i
 
-
-
-
 End Sub
 
-'this part is intended to conditionally format the cells red and green as instructed
-
+'The below subroutine conditionally formats the rows red and green as instructed. 
 
 Sub format_cells()
 
@@ -279,10 +255,9 @@ Sub format_cells()
     
     Next i
     
-    
 End Sub
 
-'this part is the part where we calculate the three 'superlatives' - top pct, bottom pct, and largest volume
+'this subroutine calculates the three 'superlatives' - top pct, bottom pct, and largest volume
 
 Sub superlatives()
 
@@ -291,10 +266,8 @@ Sub superlatives()
     Dim lastrow As Long
     
     lastrow = Cells(Rows.Count, "K").End(xlUp).Row
-    
 
     'find the values
-    
     
     Dim top_pct As Single
     
